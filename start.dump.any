@@ -1,0 +1,16 @@
+#!/bin/bash
+
+set -x
+
+REALPATH=$(realpath "$0")
+PROGNAME=$(/bin/basename "$0")
+PROGDIR=$(/bin/dirname "$REALPATH")
+
+tstamp=$(date +%s)
+IFACE=${PROGNAME##*.}
+FILTER="proto ospf"
+
+
+
+#tcpdump -C 100 -w kur.${IFACE}.${FILTER}.${tstamp}.pcap -i ${IFACE} host ${FILTER} &
+tcpdump -G 3600 -w ospf.${IFACE}.%Y-%m-%d_%H%M.pcap -i ${IFACE} ${FILTER} &
